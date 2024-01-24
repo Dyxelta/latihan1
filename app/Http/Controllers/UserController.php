@@ -28,7 +28,7 @@ class UserController extends Controller
         $user->email = $request->input('email');
         $user->role = $request->input('role');
         $user->gender = $request->input('gender');
-        $imagePath = $request->file('picture')->store('product', 'public');
+        $imagePath = $request->file('picture')->store('user', 'public');
         $user->picture = $imagePath;
         $user->password = Hash::make($request->input('password'));
         $user->save();

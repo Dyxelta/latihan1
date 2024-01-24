@@ -33,16 +33,6 @@ Route::post('/register-account', [UserController::class, 'registerAccount'])->na
 
 Route::post('/login-account', [UserController::class, 'loginAccount'])->name('loginAccount');
 
-Route::prefix('/customer')->middleware(CustomerMiddleware::class)->group(function() {
-
-    Route::get('/home', [ProductController::class, 'getAllProducts'])->name('customerHome');
-});
-
-Route::prefix('/admin')->middleware(AdminMiddleware::class)->group(function() {
-
-    Route::get('/home', function() {
-        return view('admin.mainAdmin');
-    })->name('adminHome');
-});
+Route::get('/home', [ProductController::class, 'getAllProducts'])->name('customerHome');
 
 

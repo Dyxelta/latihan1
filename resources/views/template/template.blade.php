@@ -26,7 +26,16 @@
     </header>
 
     @auth
-
+        @if (auth()->user()->role == "Admin")
+            <div>
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="">Cart</a></li>
+                    <li><a href="">Profile</a></li>
+                    <li><a href="">Account Maintenance</a></li>
+                </ul>
+            </div>
+        @endif
     @endauth
 
     @yield('content')
