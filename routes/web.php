@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\CustomerMiddleware;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,9 +23,15 @@ Route::get('/', function() {
     return view('guest.landing');
 })->middleware('guest')->name('landing');
 
-Route::get('/register', function () {
+Route::get('/register', function() {
+    App::setLocale('en');
     return view('guest.register');
 })->middleware('guest')->name('register');
+
+Route::get('/register/id', function() {
+    App::setLocale('id');
+    return view('guest.register');
+})->middleware('guest')->name('registerid');
 
 Route::get('/login', function() {
     return view('guest.login');

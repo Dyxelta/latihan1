@@ -24,13 +24,13 @@
 
             <div class="d-flex flex-row gap-4 w-75 px-4 py-2">
                 <div class="d-flex flex-column gap-2 w-100">
-                    <label for="first_name">First Name</label>
+                    <label for="first_name">{{ __('form.fname') }}</label>
                     <input class="w-100" type="text" name="first_name" id="first_name">
                     @error('first_name')
                         <div class="alert-danger text-danger">{{ $message }}</div>
                     @enderror
 
-                    <label for="email">Email</label>
+                    <label for="email">{{ __('form.email') }}</label>
                     <input type="email" name="email" id="email">
                     @error('email')
                         <div class="alert-danger text-danger">{{ $message }}</div>
