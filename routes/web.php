@@ -33,6 +33,20 @@ Route::post('/register-account', [UserController::class, 'registerAccount'])->na
 
 Route::post('/login-account', [UserController::class, 'loginAccount'])->name('loginAccount');
 
-Route::get('/home', [ProductController::class, 'getAllProducts'])->name('customerHome');
+Route::get('/home', [ProductController::class, 'getAllProducts'])->name('home');
+
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
+Route::middleware(AdminMiddleware::class)->group(function() {
+
+    Route::get('/account', [UserController::class, 'getAllUser'])->name('account');
+
+    Route::delete('/delete-user/{user:id}', [UserController::class, 'deleteUser'])->name('deleteUser');
+
+    Route::get('/change-role/{user:id}', [UserController::class, 'userById'])->name('changeRole');
+
+    Route::put('/update-role/{user:id}', [UserController::class, 'updateUser'])->name('updateUser');
+});
+
 
 

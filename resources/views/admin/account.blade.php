@@ -11,33 +11,38 @@
 @endsection
 
 @section('content')
-    <table class="table">
+<div class="d-flex align-items-center justify-content-center p-4">
+    <table class="table w-50">
         <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+            <tr class="text-center border-bottom-1 border-black">
+                <th scope="col">Account</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-            </tr>
+            @forelse ($users as $u)
+                <tr class="border border-1 border-black">
+                    <td class="border border-1 border-black">
+                        <div class="d-flex justify-content-center text-start">
+                            <p class="text-start w-50 m-0">{{ $u->firstName }} {{ $u->lastName }} - {{ $u->role }}</p>
+                        </div>
+                    </th>
+                    <td class="border border-1 border-black">
+                        <div class="d-flex justify-content-evenly">
+                            <a href="{{ route('changeRole', $u->id) }}">Update Role</a>
+                            <form action="{{ route('deleteUser', $u->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="border-0 btn p-0 m-0 text-primary text-decoration-underline d-flex align-items-center ">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            @empty
+            @endforelse
         </tbody>
     </table>
+</div>
 @endsection

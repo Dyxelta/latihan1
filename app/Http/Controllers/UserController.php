@@ -50,15 +50,48 @@ class UserController extends Controller
 
             if(auth()->user()->role == 'Admin') {
 
-                return redirect()->route('adminHome');
+                return redirect()->route('home');
 
             } else if (auth()->user()->role == 'Customer') {
 
-                return redirect()->route('customerHome');
+                return redirect()->route('home');
 
             }
         }
 
         return redirect()->back()->with('error', 'account not found');
+    }
+
+    public function logout(Request $request) {
+        Auth::logout();
+        $request->session()->flush();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login');
+    }
+
+    public function getAllUser() {
+        $users = User::all();
+
+        return view('admin.account', compact('users'));
+    }
+
+    public function deleteUser(User $user) {
+        $user->delete();
+
+        return redirect()->back();
+    }
+
+    public function userById(User $user) {
+
+        return view('admin.update', compact('user'));
+    }
+
+    public function updateUser(Request $request, User $user) {
+
+        $user->role = $request->role;
+        $user->save();
+
+        return redirect()->route('account');
     }
 }

@@ -14,7 +14,7 @@
     @yield('head')
 </head>
 
-<body class="vh-100 w-100 ">
+<body class="d-flex flex-column min-vh-100 w-100 ">
 
     <header>
         <div class="d-flex flex-row justify-content-between align-items-center px-4 py-2 bg-success ">
@@ -22,25 +22,32 @@
                 <h1>Amazing Grocery</h1>
             </div>
             @yield('authButton')
+            @auth
+                @if (auth()->user()->role == "Admin" || auth()->user()->role == "Customer")
+                    <a href="{{ route('logout') }}">
+                        <button>Log Out</button>
+                    </a>
+                @endif
+            @endauth
         </div>
     </header>
 
     @auth
-        @if (auth()->user()->role == "Admin")
-            <div>
-                <ul>
-                    <li><a href="">Home</a></li>
-                    <li><a href="">Cart</a></li>
-                    <li><a href="">Profile</a></li>
-                    <li><a href="">Account Maintenance</a></li>
-                </ul>
-            </div>
-        @endif
+        <div class="bg-warning py-2">
+            <ul class="d-flex flex-row align-items-center justify-content-evenly m-0">
+                <li class="list-unstyled"><a href="" class="text-decoration-none text-black fw-bold">Home</a></li>
+                <li class="list-unstyled"><a href="" class="text-decoration-none text-black fw-bold">Cart</a></li>
+                <li class="list-unstyled"><a href="" class="text-decoration-none text-black fw-bold">Profile</a></li>
+                @if (auth()->user()->role == "Admin")
+                    <li class="list-unstyled"><a href="{{ route('account') }}" class="text-decoration-none text-black fw-bold">Account Maintenance</a></li>
+                @endif
+            </ul>
+        </div>
     @endauth
 
     @yield('content')
 
-    <footer class="w-100 d-flex flex-row align-items-center justify-content-center bg-success ">
+    <footer class="w-100 d-flex flex-row align-items-center justify-content-center bg-success mt-auto">
         <p class="m-0 py-2"><span class="border border-1 border-black rounded-circle px-1">C</span>Amazing E-Grocery 2023</p>
     </footer>
 
