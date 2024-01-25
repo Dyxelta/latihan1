@@ -1,7 +1,7 @@
 @extends('template.template')
 
 @section('title')
-    <title>Home Page</title>
+    <title>Account Page</title>
 @endsection
 
 @section('head')

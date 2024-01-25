@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
@@ -36,6 +37,20 @@ Route::post('/login-account', [UserController::class, 'loginAccount'])->name('lo
 Route::get('/home', [ProductController::class, 'getAllProducts'])->name('home');
 
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
+Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+
+Route::put('/update-profile/{user:id}', [UserController::class, 'updateProfile'])->name('updateProfile');
+
+Route::get('/detail/{product:id}', [ProductController::class, 'productDetail'])->name('detail');
+
+Route::get('/cart', [CartController::class, 'showCart'])->name('cart');
+
+Route::post('/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('addToCart');
+
+Route::delete('/delete-cart-item/{cart:id}', [CartController::class, 'delete'])->name('deleteCartItem');
+
+Route::delete('/Checkout', [CartController::class, 'checkOut'])->name('checkout');
 
 Route::middleware(AdminMiddleware::class)->group(function() {
 

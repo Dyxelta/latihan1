@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -77,6 +79,8 @@ class UserController extends Controller
     }
 
     public function deleteUser(User $user) {
+        Storage::disk('public')->delete($user->picture);
+
         $user->delete();
 
         return redirect()->back();
@@ -93,5 +97,40 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->route('account');
+    }
+
+    public function profile(Request $request) {
+
+        $user = Auth::user();
+
+        return view('customer.profile', compact('user'));
+    }
+
+    public function updateProfile(Request $request, User $user) {
+
+        $request->validate([
+            'first_name' => 'required|alpha|max:25',
+            'last_name' => 'required|alpha|max:25',
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore(auth()->id())],
+            'gender' => 'required',
+            'picture' => 'image',
+            'password' => 'required|alpha_num',
+            'confirm_pass' => 'required_with:password|alpha_num|same:password',
+        ]);
+
+        $user->firstName = $request->input('first_name');
+        $user->lastName = $request->input('last_name');
+        $user->email = $request->input('email');
+        $user->gender = $request->input('gender');
+
+        if($request->picture) {
+            $imagePath = $request->file('picture')->store('user', 'public');
+            $user->picture = $imagePath;
+        }
+
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
+
+        return redirect()->route('home');
     }
 }

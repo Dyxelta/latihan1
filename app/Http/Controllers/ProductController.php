@@ -13,4 +13,9 @@ class ProductController extends Controller
 
         return view('customer.main', compact('products'));
     }
+
+    public function productDetail(Product $product) {
+
+        return view('customer.detail', compact('product'));
+    }
 }

@@ -12,14 +12,14 @@
 
 @section('content')
     <div class='d-flex flex-column align-items-center justify-content-center w-100 p-4'>
-        <div class='d-flex flex-wrap gap-4 px-5'>
+        <div class='d-flex flex-wrap gap-4 px-5 mb-4'>
             @forelse ($products as $p)
-                <div class="card" style="width: 18rem;">
-                    <img src="{{ url('assets/products/img.jpg') }}" class="card-img-top" alt="...">
-                    <div class="card-body">
+                <div class="d-flex flex-column align-items-center justify-content-center " style="width: 14rem;">
+                    <img class="w-50" src="{{ url('assets/products/img.jpg') }}" alt="...">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
                         <h5 class="card-title">{{ $p->name }}</h5>
                         <p class="card-text">{{ $p->desc }}</p>
-                        <a href="#" class="btn btn-primary">Detail</a>
+                        <a href="{{ route('detail', $p->id) }}" class="btn btn-primary">Detail</a>
                     </div>
                 </div>
             @empty

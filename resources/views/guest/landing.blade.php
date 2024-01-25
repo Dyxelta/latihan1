@@ -10,7 +10,7 @@
 
 @section('authButton')
 
-    <div>
+    <div class="position-absolute end-0 me-5 ">
         <a href="{{ route('register') }}">
             <button>
                 Register
